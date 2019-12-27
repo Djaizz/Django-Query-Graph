@@ -24,7 +24,7 @@ class ModelQueryGraph:
         assert all_non_many_related_field_names.issuperset(non_many_related_field_names)
 
         _overlapping_field_names = \
-            all_non_many_related_field_names.intersection(
+            set(non_many_related_field_names).intersection(
                 fk_and_many_related_field_names_and_corresponding_model_query_graphs)
 
         assert not _overlapping_field_names, \
