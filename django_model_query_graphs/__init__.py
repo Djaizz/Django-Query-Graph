@@ -7,10 +7,10 @@ PK_FIELD_NAME = 'pk'
 class ModelQueryGraph:
     def __init__(
             self, ModelClass,
-            *non_fk_non_many_related_field_names,
+            *non_many_related_field_names,
             ORDER=True,
             **fk_and_many_related_field_names_and_corresponding_model_query_graphs):
-        if PK_FIELD_NAME in non_fk_non_many_related_field_names:
+        if PK_FIELD_NAME in non_many_related_field_names:
             assert not ORDER
 
         self.ModelClass = ModelClass
@@ -21,7 +21,14 @@ class ModelQueryGraph:
 
         all_non_many_related_field_names.add(PK_FIELD_NAME)
 
-        assert all_non_many_related_field_names.issuperset(non_fk_non_many_related_field_names)
+        assert all_non_many_related_field_names.issuperset(non_many_related_field_names)
+
+        _overlapping_field_names = \
+            all_non_many_related_field_names.intersection(
+                fk_and_many_related_field_names_and_corresponding_model_query_graphs)
+
+        assert not _overlapping_field_names, \
+            '*** {} ***'.format(_overlapping_field_names)
 
         fk_model_query_graphs = {}
         self.many_related_model_query_graphs = {}
@@ -39,7 +46,7 @@ class ModelQueryGraph:
                     fk_or_many_related_model_query_graph
 
         self.select_related = tuple(fk_model_query_graphs)
-        self.field_names = non_fk_non_many_related_field_names
+        self.field_names = non_many_related_field_names
 
         for fk_field_name, fk_model_query_graph in fk_model_query_graphs.items():
             self.select_related += \
