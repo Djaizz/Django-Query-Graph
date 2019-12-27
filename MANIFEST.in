@@ -1,0 +1,3 @@
+include requirements.txt
+include django_model_query_graphs/metadata.yml
+recursive-exclude *.pyc
