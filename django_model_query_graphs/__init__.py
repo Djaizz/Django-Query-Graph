@@ -1,6 +1,9 @@
 from django.db.models.query import Prefetch
 
 
+__all__ = 'PK_FIELD_NAME', 'ModelQueryGraph'
+
+
 PK_FIELD_NAME = 'pk'
 
 
