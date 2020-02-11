@@ -30,5 +30,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=
-        [s for s in open(_REQUIREMENTS_FILE_NAME).readlines()
-           if not s.startswith('#')])
+        [s
+         for s in {i.strip()
+                   for i in open(_REQUIREMENTS_FILE_NAME).readlines()}
+         if not s.startswith('#')])
