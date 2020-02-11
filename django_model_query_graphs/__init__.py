@@ -1,7 +1,7 @@
-from django.db.models.query import Prefetch
-
-
 __all__ = 'PK_FIELD_NAME', 'ModelQueryGraph'
+
+
+from django.db.models.query import Prefetch, QuerySet
 
 
 PK_FIELD_NAME = 'pk'
@@ -9,10 +9,12 @@ PK_FIELD_NAME = 'pk'
 
 class ModelQueryGraph:
     def __init__(
-            self, ModelClass,
-            *non_many_related_field_names,
-            ORDER=True,
-            **fk_and_many_related_field_names_and_corresponding_model_query_graphs):
+            self,
+            ModelClass,
+            *non_many_related_field_names: str,
+            ORDER: (bool, str) = True,
+            **fk_and_many_related_field_names_and_corresponding_model_query_graphs) \
+            -> None:
         if PK_FIELD_NAME in non_many_related_field_names:
             assert not ORDER
 
@@ -81,7 +83,7 @@ class ModelQueryGraph:
         else:
             self.order = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '{}{}\nONLY({}){}{}'.format(
 
                 self.ModelClass.__name__,
@@ -108,10 +110,12 @@ class ModelQueryGraph:
                     if self.many_related_model_query_graphs
                     else '')
 
-    def __str__(self):
-        return repr(self)
+    __str__ = __repr__
 
-    def query_set(self, init=None):
+    def query_set(
+            self,
+            init: QuerySet = None) \
+            -> QuerySet:
         qs = self.ModelClass.objects \
             if init is None \
             else init

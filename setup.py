@@ -13,9 +13,9 @@ _REQUIREMENTS_FILE_NAME = 'requirements.txt'
 _metadata = \
     yaml.safe_load(
         stream=open(os.path.join(
-                os.path.dirname(__file__),
-                _PACKAGE_NAMESPACE_NAME,
-                _METADATA_FILE_NAME)))
+                        os.path.dirname(__file__),
+                        _PACKAGE_NAMESPACE_NAME,
+                        _METADATA_FILE_NAME)))
 
 
 setup(
