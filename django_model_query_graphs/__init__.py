@@ -2,18 +2,21 @@ __all__ = 'PK_FIELD_NAME', 'ModelQueryGraph'
 
 
 from django.db.models.query import Prefetch, QuerySet
+from typing import Optional, TypeVar
 
 
 PK_FIELD_NAME = 'pk'
 
 
 class ModelQueryGraph:
+    _OrderingType = TypeVar('_OrderingType', bool, str, list, tuple)
+
     def __init__(
             self,
             ModelClass,
             *non_many_related_field_names: str,
-            ORDER: (bool, str) = True,
-            **fk_and_many_related_field_names_and_corresponding_model_query_graphs) \
+            ORDER: Optional[_OrderingType] = True,
+            **fk_and_many_related_field_names_and_corresponding_model_query_graphs: 'ModelQueryGraph') \
             -> None:
         if PK_FIELD_NAME in non_many_related_field_names:
             assert not ORDER
@@ -110,7 +113,7 @@ class ModelQueryGraph:
 
     def query_set(
             self,
-            init: QuerySet = None) \
+            init: Optional[QuerySet] = None) \
             -> QuerySet:
         qs = self.ModelClass.objects \
             if init is None \
