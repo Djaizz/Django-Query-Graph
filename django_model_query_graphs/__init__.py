@@ -33,7 +33,7 @@ class ModelQueryGraph:
                 fk_and_many_related_field_names_and_corresponding_model_query_graphs)
 
         assert not _overlapping_field_names, \
-            '*** {} ***'.format(_overlapping_field_names)
+            f'*** OVERLAPPING FIELD NAMES: {_overlapping_field_names} ***'
 
         fk_model_query_graphs = {}
         self.many_related_model_query_graphs = {}
@@ -55,16 +55,16 @@ class ModelQueryGraph:
 
         for fk_field_name, fk_model_query_graph in fk_model_query_graphs.items():
             self.select_related += \
-                tuple('{}__{}'.format(fk_field_name, fk_model_select_related)
+                tuple(f'{fk_field_name}__{fk_model_select_related}'
                       for fk_model_select_related in fk_model_query_graph.select_related)
 
             self.field_names += \
-                tuple('{}__{}'.format(fk_field_name, fk_model_field_name)
+                tuple(f'{fk_field_name}__{fk_model_field_name}'
                       for fk_model_field_name in fk_model_query_graph.field_names)
 
             for fk_many_related_field_name, fk_many_related_model_query_graph \
                     in fk_model_query_graph.many_related_model_query_graphs.items():
-                self.many_related_model_query_graphs['{}__{}'.format(fk_field_name, fk_many_related_field_name)] = \
+                self.many_related_model_query_graphs[f'{fk_field_name}__{fk_many_related_field_name}'] = \
                     fk_many_related_model_query_graph
 
         if ORDER:
@@ -88,23 +88,19 @@ class ModelQueryGraph:
 
                 self.ModelClass.__name__,
 
-                '\nSELECT_RELATED({})'.format(
-                    ', '.join(self.select_related))
+                f"\nSELECT_RELATED({', '.join(self.select_related)})"
                     if self.select_related
                     else '',
 
                 ', '.join(self.field_names),
 
-                '\nORDER_BY({})'.format(
-                    ', '.join(self.order))
+                f"\nORDER_BY({', '.join(self.order)})"
                     if isinstance(self.order, (list, tuple))
                     else '',
 
-                '\nPREFETCH_RELATED(\n{}\n)'.format(
+                f"\nPREFETCH_RELATED(\n{}\n)".format(
                     '\n\n'.join(
-                        '{}: {}'.format(
-                            many_related_field_name,
-                            many_related_model_query_graph)
+                        f'{many_related_field_name}: {many_related_model_query_graph}'
                         for many_related_field_name, many_related_model_query_graph
                             in self.many_related_model_query_graphs.items()))
                     if self.many_related_model_query_graphs
