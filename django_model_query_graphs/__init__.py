@@ -98,7 +98,7 @@ class ModelQueryGraph:
                     if isinstance(self.order, (list, tuple))
                     else '',
 
-                f"\nPREFETCH_RELATED(\n{}\n)".format(
+                '\nPREFETCH_RELATED(\n{}\n)'.format(
                     '\n\n'.join(
                         f'{many_related_field_name}: {many_related_model_query_graph}'
                         for many_related_field_name, many_related_model_query_graph
