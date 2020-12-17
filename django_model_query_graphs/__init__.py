@@ -5,6 +5,7 @@ __all__ = 'PK_FIELD_NAME', 'ModelQueryGraph'
 
 
 from django.db.models.query import Prefetch, QuerySet
+
 from typing import Optional, TypeVar
 
 
