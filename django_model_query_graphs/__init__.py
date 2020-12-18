@@ -6,6 +6,8 @@ __all__ = 'PK_FIELD_NAME', 'ModelQueryGraph'
 
 from django.db.models.query import Prefetch, QuerySet
 
+from polymorphic.models import PolymorphicModel
+
 from typing import Optional, TypeVar
 
 
@@ -135,7 +137,9 @@ class ModelQueryGraph:
         if self.select_related:
             qs = qs.select_related(*self.select_related)
 
-        qs = qs.only(*self.field_names)
+        # .only(...) seems to mess up PolymorphicModel
+        if not issubclass(self.ModelClass, PolymorphicModel):
+            qs = qs.only(*self.field_names)
 
         if self.order:
             if isinstance(self.order, (list, tuple)):
