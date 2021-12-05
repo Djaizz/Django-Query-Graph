@@ -1,3 +1,0 @@
-Django >= 3.1.4
-
-Django-Polymorphic >= 3.0.0
