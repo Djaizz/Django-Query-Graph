@@ -58,7 +58,7 @@ classifiers = [
 ]
 
 packages = [
-  {include = 'djqg.py', from = 'src'}
+  {include = 'dqg.py', from = 'src'}
 ]
 
 include = []
