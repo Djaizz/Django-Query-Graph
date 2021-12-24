@@ -70,7 +70,7 @@ Django-Polymorphic = '^3.1.0'
 
 [build-system]
 requires = [
-  'SetUpTools >= 59.6.0',
-  'Wheel >= 0.37.0'
+  'SetUpTools >= 60.1.0',
+  'Wheel >= 0.37.1',
 ]
 build-backend = 'setuptools.build_meta'
