@@ -10,10 +10,10 @@ requires-python = '>= 3.8'
 license = {file = 'LICENSE'}
 
 authors = [
-  {name = 'STEAM for Vietnam Foundation: AI & Robotics Educational Initiative', email = 'Edu.AI@STEAMforVietNam.org'}
+  {name = 'The Vinh LUONG (LƯƠNG Thế Vinh)', email = 'TheVinhLuong@gmail.com'}
 ]
 maintainers = [
-  {name = 'STEAM for Vietnam Foundation: AI & Robotics Educational Initiative', email = 'Edu.AI@STEAMforVietNam.org'}
+  {name = 'The Vinh LUONG (LƯƠNG Thế Vinh)', email = 'TheVinhLuong@gmail.com'}
 ]
 
 keywords = [

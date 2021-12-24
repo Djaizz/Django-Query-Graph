@@ -7,10 +7,10 @@ description = 'Django Model Query Graph'
 license = 'MIT'
 
 authors = [
-  'STEAM for Vietnam Foundation AI & Robotics Educational Initiative <Edu.AI@STEAMforVietNam.org>'
+  'The Vinh LUONG (LƯƠNG Thế Vinh) <TheVinhLuong@gmail.com>'
 ]
 maintainers = [
-  'STEAM for Vietnam Foundation AI & Robotics Educational Initiative <Edu.AI@STEAMforVietNam.org>'
+  'The Vinh LUONG (LƯƠNG Thế Vinh) <TheVinhLuong@gmail.com>'
 ]
 
 readme = 'README.md'
@@ -85,6 +85,11 @@ GitHub = 'https://GitHub.com/Django-AI/Django-Query-Graph'
 [build-system]
 requires = [
   'Poetry-Core >= 1.0.7',
-  'SetUpTools >= 60.1.0',   # *** TEMP FIX per github.com/pypa/pip/issues/10743#issuecomment-998321115 ***
+
+  # *** TEMP FIX for SetUpTools-related bug ***
+  # github.com/pypa/pip/issues/10743#issuecomment-998321115
+  # github.com/python-poetry/poetry/issues/3153#issuecomment-727196619
+  # github.com/python-poetry/poetry/issues/4915#issuecomment-999449889
+  'SetUpTools >= 60.1.0',
 ]
 build-backend = 'poetry.core.masonry.api'
