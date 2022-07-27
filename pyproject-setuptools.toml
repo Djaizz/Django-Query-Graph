@@ -63,13 +63,13 @@ Documentation = 'https://Django-AI.GitHub.io/Django-Query-Graph'
 
 
 [project.dependencies]
-Django = '^4.0.1'
+Django = '^4.0.6'
 Django-Polymorphic = '^3.1.0'
 
 
 [build-system]
 requires = [
-  'SetUpTools >= 60.5.0',
+  'SetUpTools >= 63.2.0',
   'Wheel >= 0.37.1',
 ]
 build-backend = 'setuptools.build_meta'
