@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'Django-Query-Graph'
-version = '0.0.0.dev0'
+version = '0.0.0.dev1'
 
 description = 'Django Model Query Graph'
 
@@ -73,7 +73,7 @@ Python = '^3.8'
 
 # Django
 # ======
-Django = '^4.0.6'
+Django = '^4.1'
 Django-Polymorphic = '^3.1.0'
 
 
