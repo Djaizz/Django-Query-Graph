@@ -1,20 +1,9 @@
+# python.org/dev/peps/pep-0621
+# setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+
+
 [project]
 name = 'Django-Query-Graph'
-version = '0.0.0.dev0'
-
-description = 'Django Model Query Graph'
-readme = {file = 'README.md', content-type = 'text/markdown', charset = 'UTF-8'}
-
-requires-python = '>= 3.8'
-
-license = {file = 'LICENSE'}
-
-authors = [
-  {name = 'The Vinh LUONG (LƯƠNG Thế Vinh)', email = 'TheVinhLuong@gmail.com'}
-]
-maintainers = [
-  {name = 'The Vinh LUONG (LƯƠNG Thế Vinh)', email = 'TheVinhLuong@gmail.com'}
-]
 
 keywords = [
   'Django',
@@ -22,54 +11,106 @@ keywords = [
   'graph',
 ]
 
-classifiers = [
-  'Development Status :: 5 - Production/Stable',
-  # 'Development Status :: 6 - Mature',
-  'Environment :: MacOS X',
-  'Environment :: Win32 (MS Windows)',
-  'Framework :: Django',
-  'Framework :: Django :: 4.0',
-  'Intended Audience :: Developers',
-  'Operating System :: MacOS',
-  'Operating System :: MacOS :: MacOS X',
-  'Operating System :: Microsoft',
-  'Operating System :: Microsoft :: Windows',
-  'Operating System :: Microsoft :: Windows :: Windows 7',
-  'Operating System :: Microsoft :: Windows :: Windows 8',
-  'Operating System :: Microsoft :: Windows :: Windows 8.1',
-  'Operating System :: Microsoft :: Windows :: Windows 10',
-  'Operating System :: OS Independent',
-  'Operating System :: Other OS',
-  'Operating System :: POSIX',
-  'Operating System :: POSIX :: Linux',
-  'Programming Language :: Python',
-  'Programming Language :: Python :: 3',
-  'Programming Language :: Python :: 3.8',
-  'Programming Language :: Python :: 3.9',
-  'Programming Language :: Python :: 3.10',
-  'Programming Language :: Python :: 3.11',
-  'Topic :: Scientific/Engineering',
-  'Topic :: Software Development',
-  'Topic :: Software Development :: Libraries',
-  'Topic :: Software Development :: Libraries :: Python Modules',
+readme = {file = 'README.md', content-type = 'text/markdown', charset = 'UTF-8'}
+
+requires-python = '>= 3.8'
+
+license = {file = 'LICENSE'}
+
+authors = [
+  {name = 'The Vinh LUONG (LƯƠNG Thế Vinh)', email = 'TheVinhLuong@gmail.com'},
+]
+maintainers = [
+  {name = 'The Vinh LUONG (LƯƠNG Thế Vinh)', email = 'TheVinhLuong@gmail.com'},
+]
+
+
+dynamic = [
+  'version',
+
+  'description',
+
+  'classifiers',
+
+  'dependencies',
+  'optional-dependencies',
+
+  'entry-points',
 ]
 
 
 [project.urls]
-Homepage = 'https://GitHub.com/Django-AI/Django-Query-Graph'
-Repository = 'https://GitHub.com/Django-AI/Django-Query-Graph'
-GitHub = 'https://GitHub.com/Django-AI/Django-Query-Graph'
-Documentation = 'https://Django-AI.GitHub.io/Django-Query-Graph'
+Homepage = 'https://GitHub.com/Djaizz/Django-Query-Graph'
+Repository = 'https://GitHub.com/Djaizz/Django-Query-Graph'
+GitHub = 'https://GitHub.com/Djaizz/Django-Query-Graph'
+Documentation = 'https://Djaizz.GitHub.io/Django-Query-Graph'
 
 
-[project.dependencies]
-Django = '^4.1'
-Django-Polymorphic = '^3.1.0'
+[tool.setuptools]
+# setuptools.pypa.io/en/latest/userguide/pyproject_config.html#setuptools-specific-configuration
+
+# platforms = []  # array
+
+zip-safe = true
+
+# eager-resources = []  # array
+
+py-modules = []
+
+# packages = []  # array or find directive
+
+# package-dir = {}  # table/inline-table, used when explicitly listing packages
+
+# namespace-packages = []  # array, deprecated
+
+package-data = {}  # table/inline-table
+
+include-package-data = true
+
+exclude-package-data = {}  # table/inline-table
+
+license-files = ['LICEN[CS]E*']  # array of glob patterns
+
+data-files = {}  # table/inline-table, discouraged
+
+# script-files = []  # array, deprecated
+
+provides = []  # array, ignored by pip
+
+obsoletes = []  # array, ignored by pip
+
+
+[tool.setuptools.packages.find]
+where = ['src']
+include = ['*']
+exclude = []
+namespaces = true
+
+
+[tool.setuptools.dynamic]
+version = {file = 'metadata/version'}
+
+description = {file = 'metadata/description'}
+
+classifiers = {file = 'metadata/classifiers'}
+
+dependencies = {file = 'metadata/requirements/base.txt'}
+
+entry-points = {file = 'metadata/entry-points'}
+
+
+[tool.setuptools.dynamic.optional-dependencies]
+build = {file = 'metadata/requirements/build.txt'}
+dev = {file = 'metadata/requirements/dev.txt'}
+doc = {file = 'metadata/requirements/doc.txt'}
+lint = {file = 'metadata/requirements/lint.txt'}
+publish = {file = 'metadata/requirements/publish.txt'}
+test = {file = 'metadata/requirements/test.txt'}
 
 
 [build-system]
 requires = [
-  'SetUpTools >= 63.4.1',
-  'Wheel >= 0.37.1',
+  'SetUpTools >= 67.4.0',
+  'Wheel >= 0.38.4',
 ]
 build-backend = 'setuptools.build_meta'
