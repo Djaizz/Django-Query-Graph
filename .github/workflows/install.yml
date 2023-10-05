@@ -17,7 +17,7 @@ jobs:
       matrix:
         python-version:
           - 3.11
-          - 3.12.0-beta.2
+          - 3.12
           # github.com/actions/python-versions/blob/main/versions-manifest.json
 
     steps:
@@ -30,4 +30,4 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: PIP-Install Package & Dependencies
-        run: ./install-editable-dev
+        run: make install-editable

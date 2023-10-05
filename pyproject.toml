@@ -143,7 +143,7 @@ test = {file = 'metadata/requirements/test.txt'}
 
 [build-system]
 requires = [
-  'SetUpTools >= 67.8.0',
-  'Wheel >= 0.40.0',
+  'SetUpTools >= 68.2.2',
+  'Wheel >= 0.41.2',
 ]
 build-backend = 'setuptools.build_meta'
