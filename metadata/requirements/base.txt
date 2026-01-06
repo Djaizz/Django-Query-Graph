@@ -1,2 +1,4 @@
 Django >= 6.0
 Django-Polymorphic >= 4.6
+
+NeoModel >= 6.0
