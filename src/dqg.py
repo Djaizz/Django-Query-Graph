@@ -1,20 +1,23 @@
+"""Django Query Graph."""
+
+
 from __future__ import annotations
 
-
-__all__ = 'PK_FIELD_NAME', 'ModelQueryGraph'
-
+from typing import LiteralString, Optional, TypeVar
 
 from django.db.models.query import Prefetch, QuerySet
-
 from polymorphic.models import PolymorphicModel
 
-from typing import Optional, TypeVar
+
+__all__: tuple[LiteralString] = 'DjangoQueryGraph', 'PK_FIELD_NAME'
 
 
-PK_FIELD_NAME = 'pk'
+PK_FIELD_NAME: LiteralString = 'pk'
 
 
-class ModelQueryGraph:
+class DjangoQueryGraph:
+    """Django Query Graph."""
+
     _OrderingType = TypeVar('_OrderingType', bool, str, list, tuple)
 
     def __init__(
@@ -22,7 +25,7 @@ class ModelQueryGraph:
             ModelClass,
             *non_many_related_field_names: str,
             ORDER: Optional[_OrderingType] = True,
-            **fk_and_many_related_field_names_and_graphs: ModelQueryGraph) \
+            **fk_and_many_related_field_names_and_graphs: DjangoQueryGraph) \
             -> None:
         if PK_FIELD_NAME in non_many_related_field_names:
             assert not ORDER, \
@@ -52,7 +55,7 @@ class ModelQueryGraph:
 
         for fk_or_many_related_field_name, fk_or_many_related_mqg \
                 in fk_and_many_related_field_names_and_graphs.items():
-            assert isinstance(fk_or_many_related_mqg, ModelQueryGraph), \
+            assert isinstance(fk_or_many_related_mqg, DjangoQueryGraph), \
                 '*** VALUE ASSOCIATED WITH FIELD ' \
                 f'"{fk_or_many_related_field_name}" NOT A ModelQueryGraph ***'
 
