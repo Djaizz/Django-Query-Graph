@@ -1,5 +1,6 @@
 # peps.python.org/pep-0621
 # packaging.python.org/en/latest/specifications/declaring-project-metadata
+# setuptools.pypa.io/en/latest/userguide/pyproject_config.html
 
 
 [project]
@@ -35,7 +36,7 @@ license = {file = 'LICENSE'}
 # PYTHON VERSION REQUIREMENT
 # ==========================
 
-requires-python = '>= 3.11'
+requires-python = '>= 3.13'
 
 
 # DYNAMIC METADATA
@@ -88,26 +89,27 @@ py-modules = ['dqg']
 
 # package-dir = {}  # table/inline-table, used when explicitly listing packages
 
-[tool.setuptools.package-dir]
-'' = 'src'
-
 # namespace-packages = []  # array, deprecated
 
-package-data = {}  # table/inline-table
+# package-data = {}  # table/inline-table (not needed for single module)
 
 include-package-data = true
 
-exclude-package-data = {}  # table/inline-table
+# exclude-package-data = {}  # table/inline-table (not needed)
 
 license-files = ['LICEN[CS]E*']  # array of glob patterns
 
-data-files = {}  # table/inline-table, discouraged
+# data-files = {}  # table/inline-table, discouraged (not needed)
 
 # script-files = []  # array, deprecated
 
-provides = []  # array, ignored by pip
+# provides = []  # array, ignored by pip (not needed)
 
-obsoletes = []  # array, ignored by pip
+# obsoletes = []  # array, ignored by pip (not needed)
+
+
+[tool.setuptools.package-dir]
+'' = 'src'
 
 
 [tool.setuptools.packages.find]
@@ -148,7 +150,6 @@ test = {file = 'metadata/requirements/test.txt'}
 
 [build-system]
 requires = [
-  'SetUpTools >= 69.0.2',
-  'Wheel >= 0.42.0',
+  'SetUpTools >= 80.9',
 ]
 build-backend = 'setuptools.build_meta'
