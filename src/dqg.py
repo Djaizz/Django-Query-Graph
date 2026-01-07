@@ -3,39 +3,45 @@
 
 from __future__ import annotations
 
-from typing import LiteralString, Optional, TypeVar
+from typing import LiteralString, Self
 
-from django.db.models.query import Prefetch, QuerySet
+from django.db.models.base import Model as DjangoModel
+from django.db.models.query import Prefetch, QuerySet as DjangoQuerySet
+
 from polymorphic.models import PolymorphicModel
 
+from neomodel.sync_.node import StructuredNode as NeoNode
+from neomodel.sync_.match import NodeSet as NeoNodeSet
 
-__all__: tuple[LiteralString] = 'DjangoQueryGraph', 'PK_FIELD_NAME'
+
+__all__: tuple[LiteralString] = ('DjangoQueryGraph',)
 
 
 PK_FIELD_NAME: LiteralString = 'pk'
 
 
+type QueryOrNodeSet = DjangoQuerySet | NeoNodeSet
+
+
 class DjangoQueryGraph:
     """Django Query Graph."""
 
-    _OrderingType = TypeVar('_OrderingType', bool, str, list, tuple)
-
     def __init__(
             self,
-            ModelClass,
+            ModelOrNodeClass: type[DjangoModel | NeoNode], /,
             *non_many_related_field_names: str,
-            ORDER: Optional[_OrderingType] = True,
-            **fk_and_many_related_field_names_and_graphs: DjangoQueryGraph) \
-            -> None:
+            ORDER: bool | str | list[str] | tuple[str, ...] | None = True,
+            **fk_and_many_related_field_names_and_graphs: Self) -> None:
+        """Initialize Django Query Graph."""
         if PK_FIELD_NAME in non_many_related_field_names:
             assert not ORDER, \
                 f'*** ORDERING MUST BE OFF WHEN "{PK_FIELD_NAME}" PRESENT ***'
 
-        self.ModelClass = ModelClass
+        self.ModelOrNodeClass = ModelOrNodeClass
 
         all_non_many_related_field_names = \
             {field.name
-             for field in ModelClass._meta.fields}
+             for field in ModelOrNodeClass._meta.fields}
         all_non_many_related_field_names.add(PK_FIELD_NAME)
 
         _non_many_related_field_names = set(non_many_related_field_names)
@@ -107,7 +113,7 @@ class DjangoQueryGraph:
     def __repr__(self) -> str:
         return '{}{}\nONLY({}){}{}'.format(
 
-                self.ModelClass.__name__,
+                self.ModelOrNodeClass.__name__,
 
                 f"\nSELECT_RELATED({', '.join(self.select_related)})"
                 if self.select_related
@@ -127,21 +133,15 @@ class DjangoQueryGraph:
                     if self.many_related_mqgs
                     else '')
 
-    __str__ = __repr__
-
-    def query_set(
-            self,
-            init: Optional[QuerySet] = None) \
-            -> QuerySet:
-        qs = self.ModelClass.objects \
-            if init is None \
-            else init
+    def query_or_node_set(self, init: QueryOrNodeSet | None = None) -> QueryOrNodeSet:
+        """Django Query Set or NeoModel Node Set."""
+        qs: QueryOrNodeSet = init or self.ModelOrNodeClass.objects
 
         if self.select_related:
             qs = qs.select_related(*self.select_related)
 
         # .only(...) seems to mess up PolymorphicModel
-        if not issubclass(self.ModelClass, PolymorphicModel):
+        if not issubclass(self.ModelOrNodeClass, PolymorphicModel):
             qs = qs.only(*self.field_names)
 
         if self.order:
