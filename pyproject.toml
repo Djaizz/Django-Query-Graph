@@ -82,11 +82,14 @@ zip-safe = true
 
 # eager-resources = []  # array
 
-py-modules = []
+py-modules = ['dqg']
 
 # packages = []  # array or find directive
 
 # package-dir = {}  # table/inline-table, used when explicitly listing packages
+
+[tool.setuptools.package-dir]
+'' = 'src'
 
 # namespace-packages = []  # array, deprecated
 

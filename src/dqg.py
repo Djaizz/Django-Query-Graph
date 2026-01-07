@@ -20,15 +20,16 @@ __all__: tuple[LiteralString] = ('DjangoQueryGraph',)
 PK_FIELD_NAME: LiteralString = 'pk'
 
 
+type ModelOrNode = DjangoModel | NeoNode
 type QueryOrNodeSet = DjangoQuerySet | NeoNodeSet
 
 
 class DjangoQueryGraph:
     """Django Query Graph."""
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-locals
             self,
-            ModelOrNodeClass: type[DjangoModel | NeoNode], /,
+            ModelOrNodeClass: type[ModelOrNode], /,
             *non_many_related_field_names: str,
             ORDER: bool | str | list[str] | tuple[str, ...] | None = True,
             **fk_and_many_related_field_names_and_graphs: Self) -> None:
@@ -37,19 +38,21 @@ class DjangoQueryGraph:
             assert not ORDER, \
                 f'*** ORDERING MUST BE OFF WHEN "{PK_FIELD_NAME}" PRESENT ***'
 
-        self.ModelOrNodeClass = ModelOrNodeClass
+        # pylint: disable=invalid-name
+        self.ModelOrNodeClass: type[ModelOrNode] = ModelOrNodeClass
 
-        all_non_many_related_field_names = \
+        all_non_many_related_field_names: set[str] = \
             {field.name
              for field in ModelOrNodeClass._meta.fields}
         all_non_many_related_field_names.add(PK_FIELD_NAME)
 
-        _non_many_related_field_names = set(non_many_related_field_names)
+        _non_many_related_field_names: set[str] = \
+            set(non_many_related_field_names)
 
-        _invalid_field_names = _non_many_related_field_names.difference(
-                                all_non_many_related_field_names)
-        assert not _invalid_field_names, \
-            f'*** INVALID FIELD NAMES: {_invalid_field_names} ***'
+        assert not (_invalid_field_names :=
+                    _non_many_related_field_names.difference(
+                        all_non_many_related_field_names)), \
+            ValueError(f'*** INVALID FIELD NAMES: {_invalid_field_names} ***')
 
         _overlapping_field_names = _non_many_related_field_names.intersection(
                                     fk_and_many_related_field_names_and_graphs)
