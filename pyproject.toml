@@ -17,7 +17,7 @@ keywords = [
   'graph',
 ]
 
-readme = {file = 'README.md', content-type = 'text/markdown', charset = 'UTF-8'}
+readme = {file = 'README.md', content-type = 'text/markdown'}
 
 
 # AUTHOR(S)/MAINTAINER(S) & LICENSE

@@ -8,7 +8,7 @@ from typing import LiteralString, Self
 from django.db.models.base import Model as DjangoModel
 from django.db.models.query import Prefetch, QuerySet as DjangoQuerySet
 
-from polymorphic.models import PolymorphicModel
+from polymorphic.models import PolymorphicModel as DjangoPolymorphicModel
 
 from neomodel.sync_.node import StructuredNode as NeoNode
 from neomodel.sync_.match import NodeSet as NeoNodeSet
@@ -136,29 +136,30 @@ class DjangoQueryGraph:
                     if self.many_related_mqgs
                     else '')
 
-    def query_or_node_set(self, init: QueryOrNodeSet | None = None) -> QueryOrNodeSet:
+    def query_or_node_set(self, init: QueryOrNodeSet | None = None) -> QueryOrNodeSet:  # noqa: E501
         """Django Query Set or NeoModel Node Set."""
         qs: QueryOrNodeSet = init or self.ModelOrNodeClass.objects
 
         if self.select_related:
-            qs = qs.select_related(*self.select_related)
+            qs: QueryOrNodeSet = qs.select_related(*self.select_related)
 
         # .only(...) seems to mess up PolymorphicModel
-        if not issubclass(self.ModelOrNodeClass, PolymorphicModel):
-            qs = qs.only(*self.field_names)
+        if not issubclass(self.ModelOrNodeClass, DjangoPolymorphicModel | NeoNode):  # noqa: E501
+            qs: QueryOrNodeSet = qs.only(*self.field_names)
 
         if self.order:
-            if isinstance(self.order, (list, tuple)):
-                qs = qs.order_by(*self.order)
+            if isinstance(self.order, list | tuple):
+                qs: QueryOrNodeSet = qs.order_by(*self.order)
 
             else:
                 assert self.order is True
 
         else:
-            qs = qs.order_by()
+            qs: QueryOrNodeSet = qs.order_by()
 
         if self.many_related_mqgs:
-            qs = qs.prefetch_related(
+            qs: QueryOrNodeSet = \
+                qs.prefetch_related(
                     *(Prefetch(
                         lookup=many_related_field_name,
                         queryset=many_related_mqg.query_set())

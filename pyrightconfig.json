@@ -1,4 +1,6 @@
 {
+  "reportAssignmentType": "none",
   "reportAttributeAccessIssue": "none",
+  "reportRedeclaration": "none",
   "reportUnknownMemberType": "none",
 }
