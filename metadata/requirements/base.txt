@@ -1,5 +1,5 @@
-Django >= 6.0
+django >= 6.0
 
-Django-Polymorphic >= 4.6
+django-polymorphic >= 4.6
 
-Django-NeoModel @ git+https://GitHub.com/Djaizz/Neo4j-Contrib.Django-NeoModel
+django-neomodel @ git+https://github.com/djaizz/neo4j-contrib.django-neomodel
