@@ -8,8 +8,6 @@ from typing import LiteralString, Self
 from django.db.models.base import Model as DjangoModel
 from django.db.models.query import Prefetch, QuerySet as DjangoQuerySet
 
-from polymorphic.models import PolymorphicModel as DjangoPolymorphicModel
-
 from neomodel.sync_.node import StructuredNode as NeoNode
 from neomodel.sync_.match import NodeSet as NeoNodeSet
 
@@ -143,8 +141,7 @@ class DjangoQueryGraph:
         if self.select_related:
             qs: QueryOrNodeSet = qs.select_related(*self.select_related)
 
-        # .only(...) seems to mess up PolymorphicModel
-        if not issubclass(self.ModelOrNodeClass, DjangoPolymorphicModel | NeoNode):  # noqa: E501
+        if not issubclass(self.ModelOrNodeClass, NeoNode):
             qs: QueryOrNodeSet = qs.only(*self.field_names)
 
         if self.order:
